@@ -1,0 +1,121 @@
+# Historic_country_people
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Исторические события и все, что с ними связано</title>
+</head>
+<body>
+    <h1>Проект Лавриненко Марии Б03-107</h1>
+    <p>Вариант 1. Нужно было создать веб-приложение с информацией про исторические события, страны
+ и исторические лица.</p>
+    <ul>
+        <li> <a href="/country.html">Страница со списком стран </a> </li>
+        <li> <a href="/persons.html">Страница со списком людей </a> </li>
+        <li> <a href="/events.html"> Страница со списком событий </a> </li>
+    </ul>
+</body>
+</html>
+
+
+
+
+#country.html / countries.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ country_info[1] }}</title>
+</head>
+<body>
+    <h1>{{ country_info[1] }}</h1>
+    <h2>Languages:</h2>
+    <ul>
+        {% for language in language_info %}
+            <li>{{ language[1] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Events:</h2>
+    <ul>
+        {% for event in events_info %}
+            <li>{{ event[1] }} - {{ event[2] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Historical Figures:</h2>
+    <ul>
+        {% for figure in persons_info %}
+            <li>{{ figure[1] }} - {{ figure[2] }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ country_info[1] }}</title>
+</head>
+<body>
+    <h1>{{ country_info[1] }}</h1>
+    <h2>Languages:</h2>
+    <ul>
+        {% for language in language_info %}
+            <li>{{ language[1] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Events:</h2>
+    <ul>
+        {% for event in events_info %}
+            <li>{{ event[1] }} - {{ event[2] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Historical Figures:</h2>
+    <ul>
+        {% for figure in persons_info %}
+            <li>{{ figure[1] }} - {{ figure[2] }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+# events.html
+<html>
+<head>
+    <title>Раздел: Исторические события</title>
+</head>
+<body>
+    <h1>Исторические события</h1>
+    <form action="/events" method="post">
+        <label for="search_event_title">Search by Event Title:</label>
+        <input type="text" id="search_event_title" name="search_event_title">
+        <input type="submit" value="Search">
+    </form>
+    <ul>
+        {% for event in events_list %}
+            <li>{{ event }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+#pearsons.html
+<html>
+<head>
+    <title>Раздел: Исторические личности</title>
+</head>
+<body>
+    <h1>Исторические личности</h1>
+    <form action="/persons" method="post">
+        <label for="search_person_name">Search by Person Name:</label>
+        <input type="text" id="search_person_name" name="search_person_name">
+        <input type="submit" value="Search">
+    </form>
+    <ul>
+        {% for person in persons_list %}
+            <li>{{ person }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
