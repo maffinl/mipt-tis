@@ -1,0 +1,187 @@
+PRAGMA foreign_keys = OFF;
+
+BEGIN TRANSACTION;
+
+CREATE TABLE countrys (country_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	country_name TEXT NOT NULL, 
+	square INTEGER,
+	population INTEGER);
+	
+INSERT INTO countrys(country_id, country_name, square, population) VALUES ('Русь', 1330000, 5400000);
+INSERT INTO countrys(country_id, country_name, square, population) VALUES (2, 'Россия', 17098246, 146447424);
+INSERT INTO countrys(country_id, country_name, square, population) VALUES (3, 'Германия', 357592, 84432670);
+#INSERT INTO countrys (1, 'Киевская Русь', 1330000, 5400000);
+#INSERT INTO countrys (2, 'Россия', 17098246, 146447424);
+#INSERT INTO countrys (3, 'Германия', 357592, 84432670);
+
+CREATE TABLE languages (language_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	language_name TEXT NOT NULL);	
+	
+INSERT INTO languages (language_id, language_name) 
+	VALUES (1, 'Старославянский');
+INSERT INTO languages (language_id, language_name) 
+	VALUES (2, 'Русский');
+INSERT INTO languages (language_id, language_name) 
+	VALUES (3, 'Татарский');
+INSERT INTO languages (language_id, language_name) 
+	VALUES (4, 'Башкирский');
+INSERT INTO languages (language_id, language_name) 
+	VALUES (5, 'Украинский');
+INSERT INTO languages (language_id, language_name) 
+	VALUES (6, 'Немецкий');
+#INSERT INTO languages (1, 'Старославянский');
+#INSERT INTO languages (2, 'Русский');
+#INSERT INTO languages (3, 'Татарский');
+#INSERT INTO languages (4, 'Башкирский');
+#INSERT INTO languages (5, 'Украинский');
+#INSERT INTO languages (6, 'Немецкий');
+
+CREATE TABLE contry_language_conect (country_id INTEGER NOT NULL,
+	language_id INTEGER NOT NULL, 
+	persent_speak INTEGER,
+	PRIMARY KEY(country_id, language_id),
+	FOREIGN KEY (country_id) REFERENCES countrys, 
+	FOREIGN KEY (language_id) REFERENCES languages );
+	
+INSERT INTO contry_language_conect (country_id, language_id, persent_speak) 
+	VALUES (1, 1, 30);
+INSERT INTO contry_language_conect (country_id, language_id, persent_speak) 
+	VALUES (2, 2, 97);
+INSERT INTO contry_language_conect (country_id, language_id, persent_speak) 
+	VALUES (2, 3, 2);
+INSERT INTO contry_language_conect (country_id, language_id, persent_speak) 
+	VALUES (2, 4, 1);
+INSERT INTO contry_language_conect (country_id, language_id, persent_speak) 
+	VALUES (2, 5, 1);
+INSERT INTO contry_language_conect (country_id, language_id, persent_speak) 
+	VALUES (3, 6, 95);
+
+CREATE TABLE historic_persons (historic_person_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	person_name TEXT NOT NULL, 
+	birth_year INTEGER);
+INSERT INTO historic_persons (historic_person_id, person_name, birth_year) 
+	VALUES (1, 'Кирилл', 827);
+INSERT INTO historic_persons (historic_person_id, person_name, birth_year) 
+	VALUES (2,'Мефодий', 815);
+INSERT INTO historic_persons (historic_person_id, person_name, birth_year) 
+	VALUES (3,'Княгиня Ольга', 920);
+INSERT INTO historic_persons (historic_person_id, person_name, birth_year) 
+	VALUES (4,'Иосиф Сталин', 1879);
+INSERT INTO historic_persons (historic_person_id, person_name, birth_year) 
+	VALUES (5,'Адольф Гитлер', 1889);
+
+CREATE TABLE contry_person_conect (country_id INTEGER NOT NULL,
+	historic_person_id INTEGER NOT NULL, PRIMARY KEY(country_id, historic_person_id),
+	FOREIGN KEY (country_id) REFERENCES countrys, 
+	FOREIGN KEY (historic_person_id) REFERENCES historic_persons);
+INSERT INTO contry_person_conect (country_id, historic_person_id) 
+	VALUES (1, 1);
+INSERT INTO contry_person_conect (country_id, historic_person_id) 
+	VALUES (1, 2);
+INSERT INTO contry_person_conect (country_id, historic_person_id) 
+	VALUES (1, 3);
+INSERT INTO contry_person_conect (country_id, historic_person_id) 
+	VALUES (2, 4);
+INSERT INTO contry_person_conect (country_id, historic_person_id) 
+	VALUES (3, 5);
+
+CREATE TABLE date_death (historic_person_id INTEGER NOT NULL,
+	death_year INTEGER NOT NULL,
+	PRIMARY KEY (historic_person_id, death_year),
+	FOREIGN KEY (historic_person_id) REFERENCES historic_persons);
+
+INSERT INTO date_death (historic_person_id, death_year) 
+	VALUES (1, 869);
+INSERT INTO date_death (historic_person_id, death_year) 
+	VALUES (2, 885);
+INSERT INTO date_death (historic_person_id, death_year) 
+	VALUES (3, 969);
+INSERT INTO date_death (historic_person_id, death_year) 
+	VALUES (4, 1953);
+INSERT INTO date_death (historic_person_id, death_year) 
+	VALUES (5, 1945);
+
+CREATE TABLE historic_events (event_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	event_name TEXT NOT NULL, 
+	start_year INTEGER,
+	event_type_id INTEGER,
+	FOREIGN KEY (event_type_id) REFERENCES event_type));
+
+INSERT INTO historic_events (event_id, event_name, start_year, event_type_id) 
+	VALUES (1, 'Создание Старославянской азбуки', 863, 1 );
+INSERT INTO historic_events (event_id, event_name, start_year, event_type_id) 
+	VALUES (2, 'Правление Княгини Ольги', 945, 2 );
+INSERT INTO historic_events (event_id, event_name, start_year, event_type_id) 
+	VALUES (3, 'Финансово-экономический кризис 2008', 2008, 3 );
+INSERT INTO historic_events (event_id, event_name, start_year, event_type_id) 
+	VALUES (4, 'Вторая мировая война', 1939, 4 );
+INSERT INTO historic_events (event_id, event_name, start_year, event_type_id) 
+	VALUES (5, 'Голод в Поволжье', 1921, 5 );
+
+
+CREATE TABLE date_event_end (event_id INTEGER NOT NULL,
+	event_end_year INTEGER NOT NULL,
+	PRIMARY KEY (event_id,event_end_year),
+	FOREIGN KEY (event_id) REFERENCES historic_events);
+	
+INSERT INTO date_event_end (event_id, event_end_year) 
+	VALUES (1, 863);
+INSERT INTO date_event_end (event_id, event_end_year) 
+	VALUES (2, 964);
+INSERT INTO date_event_end (event_id, event_end_year) 
+	VALUES (3, 2010);
+INSERT INTO date_event_end (event_id, event_end_year) 
+	VALUES (4, 1945);
+INSERT INTO date_event_end (event_id, event_end_year) 
+	VALUES (5, 1922);
+	
+
+CREATE TABLE event_type (event_type_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	type_name TEXT NOT NULL);
+INSERT INTO event_type (event_type_id, type_name) 
+	VALUES (1, 'создание письменности');
+INSERT INTO event_type (event_type_id, type_name) 
+	VALUES (2, 'правление');
+INSERT INTO event_type (event_type_id, type_name) 
+	VALUES (3, 'экономический кризис');
+INSERT INTO event_type (event_type_id, type_name) 
+	VALUES (4, 'война');
+INSERT INTO event_type (event_type_id, type_name) 
+	VALUES (5, 'голод');
+
+
+CREATE TABLE contry_event_conect (country_id INTEGER NOT NULL,
+	event_id INTEGER NOT NULL, PRIMARY KEY(country_id, event_id),
+	FOREIGN KEY (country_id) REFERENCES countrys, 
+	FOREIGN KEY (event_id) REFERENCES historic_events);
+INSERT INTO contry_event_conect (country_id, event_id) 
+	VALUES (1, 1);
+INSERT INTO contry_event_conect (country_id, event_id) 
+	VALUES (1, 2);
+INSERT INTO contry_event_conect (country_id, event_id) 
+	VALUES (2, 3);
+INSERT INTO contry_event_conect (country_id, event_id) 
+	VALUES (2, 4);
+INSERT INTO contry_event_conect (country_id, event_id) 
+	VALUES (3, 4);
+INSERT INTO contry_event_conect (country_id, event_id) 
+	VALUES (2, 5);
+
+
+CREATE TABLE person_event_conect (historic_person_id INTEGER NOT NULL,
+	event_id INTEGER NOT NULL, 
+	historic_person_role TEXT,
+	PRIMARY KEY(historic_person_id, event_id),
+	FOREIGN KEY (historic_person_id) REFERENCES historic_persons, 
+	FOREIGN KEY (event_id) REFERENCES historic_events);
+INSERT INTO person_event_conect (historic_person_id, event_id, historic_person_role) 
+	VALUES (1, 1, 'Создатель письменности');
+INSERT INTO person_event_conect (historic_person_id, event_id, historic_person_role) 
+	VALUES (2, 1, 'Создатель письменности');
+INSERT INTO person_event_conect (historic_person_id, event_id, historic_person_role) 
+	VALUES (3, 1, 'Княгиня');
+INSERT INTO person_event_conect (historic_person_id, event_id, historic_person_role) 
+	VALUES (4, 4, 'Руководитель страны');
+INSERT INTO person_event_conect (historic_person_id, event_id, historic_person_role) 
+	VALUES (5, 4, 'Руководитель страны');
+
